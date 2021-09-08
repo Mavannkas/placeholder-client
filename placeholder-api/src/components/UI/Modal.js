@@ -1,19 +1,23 @@
 import { createPortal } from "react-dom";
-
+import { Card } from "./Card";
+import classes from "./Modal.module.scss";
+import { Button } from "./Button";
 const BackDrop = (props) => {
-  return <div onClick={props.onClose} />;
+  return <div className={classes.backdrop} onClick={props.onClose} />;
 };
 
 const ModalOverlay = (props) => {
   return (
-    <div>
+    <Card className={classes.overlay}>
       <header>{props.title}</header>
       <div>{props.message}</div>
       <footer>
-        <button onClick={props.onAllow}>Ok</button>
-        <button onClick={props.onClose}>Cancel</button>
+        <Button onClick={props.onAllow}>Ok</Button>
+        <Button onClick={props.onClose} className={classes.red}>
+          Cancel
+        </Button>
       </footer>
-    </div>
+    </Card>
   );
 };
 

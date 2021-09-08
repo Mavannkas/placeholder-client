@@ -6,6 +6,7 @@ import { Modal } from "../UI/Modal";
 import { TodoList } from "./TodoList";
 
 import classes from "./TodoItem.module.scss";
+import { Button } from "../UI/Button";
 
 export const TodoItem = (props) => {
   const { isLoading, result, error, sendRequest } = useHttp(getUser, true);
@@ -69,8 +70,8 @@ export const TodoItem = (props) => {
   if (error) {
     return <p>Sth is wrong...</p>;
   }
-
   const additionalClasses = completedState ? classes["card--green"] : "";
+  console.log(additionalClasses);
 
   return (
     <Card className={`${classes.card} ${additionalClasses}`}>
@@ -101,15 +102,22 @@ export const TodoItem = (props) => {
       <footer>
         {!editable && (
           <>
-            <button onClick={toggleStateHandler}>Change state</button>
-            <button onClick={editShowHandler}>Edit</button>
-            <button onClick={deleteHandler}>Delete</button>
+            <Button onClick={toggleStateHandler}>Change state</Button>
+            <Button onClick={editShowHandler}>Edit</Button>
+            <Button className={classes["button--red"]} onClick={deleteHandler}>
+              Delete
+            </Button>
           </>
         )}
         {editable && (
           <>
-            <button onClick={saveEditHandler}>Save</button>
-            <button onClick={closeEditHandler}>Close</button>
+            <Button onClick={saveEditHandler}>Save</Button>
+            <Button
+              className={classes["button--red"]}
+              onClick={closeEditHandler}
+            >
+              Close
+            </Button>
           </>
         )}
       </footer>
