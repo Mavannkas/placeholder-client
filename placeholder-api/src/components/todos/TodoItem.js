@@ -1,13 +1,28 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useHttp } from "../../hooks/use-http";
 import { getUser } from "../../lib/api";
+import { Modal } from "../UI/Modal";
 
 export const TodoItem = (props) => {
   const { isLoading, result, error, sendRequest } = useHttp(getUser, true);
+  const [isDelete, setIsDelete] = useState(false);
 
   useEffect(() => {
     sendRequest(props.userId);
-  }, [sendRequest]);
+  }, [sendRequest, props.userId]);
+
+  const deleteHandler = () => {
+    console.log("XD");
+    setIsDelete(true);
+  };
+
+  const deleteItemHandler = () => {
+    props.onDelete(props.id);
+  };
+
+  const closeModalHandler = () => {
+    setIsDelete(false);
+  };
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -18,6 +33,14 @@ export const TodoItem = (props) => {
   }
   return (
     <div>
+      {isDelete && (
+        <Modal
+          onClose={closeModalHandler}
+          onAllow={deleteItemHandler}
+          message="Are you sure you want to delete?"
+          title="Attention"
+        />
+      )}
       <header>
         {props.title} {props.completed ? "Completed" : "Not completed"}
       </header>
@@ -29,7 +52,7 @@ export const TodoItem = (props) => {
       <footer>
         <button>Change state</button>
         <button>Edit</button>
-        <button>Delete</button>
+        <button onClick={deleteHandler}>Delete</button>
       </footer>
     </div>
   );
