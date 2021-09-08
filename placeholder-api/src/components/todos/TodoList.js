@@ -35,6 +35,24 @@ export const TodoList = (props) => {
     });
   };
 
+  const editHandler = async (id, directTitle) => {
+    try {
+      await updateTodo(id, {
+        title: directTitle,
+      });
+    } catch (err) {
+      alert(err);
+    }
+
+    setTodoList((prevTodos) => {
+      const todoIndex = prevTodos.findIndex((todo) => todo.id === id);
+
+      prevTodos[todoIndex].title = directTitle;
+
+      return prevTodos;
+    });
+  };
+
   return (
     <ol>
       {todoList.map((item) => (
@@ -43,9 +61,10 @@ export const TodoList = (props) => {
           id={item.id}
           userId={item.userId}
           title={item.title}
-          mpleted={item.completed}
+          completed={item.completed}
           onDelete={deleteHandler}
           onToggleState={toggleStateHandler}
+          onEdit={editHandler}
         />
       ))}
     </ol>
