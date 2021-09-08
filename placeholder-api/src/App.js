@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { TodoList } from "./components/todos/TodoList";
 import { useHttp } from "./hooks/use-http";
 import { getAllTodos } from "./lib/api";
 
@@ -19,9 +20,7 @@ function App() {
 
   return (
     <>
-      {result.map((item) => (
-        <div>{item.title}</div>
-      ))}
+      <TodoList todos={result} />
     </>
   );
 }
