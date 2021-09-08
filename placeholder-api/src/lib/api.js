@@ -37,7 +37,7 @@ export const deleteTodo = async (id, body) => {
 
 export const createTodo = async (body) => {
   return await defaultFetch(`${API_URL}/todos`, {
-    method: "PUSH",
+    method: "POST",
     headers: {
       "Content-type": "application/json; charset=UTF-8",
     },

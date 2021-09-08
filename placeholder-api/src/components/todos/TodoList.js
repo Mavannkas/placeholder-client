@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { deleteTodo, updateTodo } from "../../lib/api";
+import { createTodo, deleteTodo, updateTodo } from "../../lib/api";
+import { CreateTodo } from "./CreateTodo";
 import { TodoItem } from "./TodoItem";
 
 export const TodoList = (props) => {
@@ -53,20 +54,36 @@ export const TodoList = (props) => {
     });
   };
 
+  const createHandler = async (body) => {
+    let response;
+    try {
+      response = await createTodo(body);
+    } catch (err) {
+      alert(err);
+    }
+
+    setTodoList((prevTodos) => {
+      return [response, ...prevTodos];
+    });
+  };
+
   return (
-    <ol>
-      {todoList.map((item) => (
-        <TodoItem
-          key={item.id}
-          id={item.id}
-          userId={item.userId}
-          title={item.title}
-          completed={item.completed}
-          onDelete={deleteHandler}
-          onToggleState={toggleStateHandler}
-          onEdit={editHandler}
-        />
-      ))}
-    </ol>
+    <>
+      <CreateTodo onCreateNewTodo={createHandler} />
+      <ol>
+        {todoList.map((item) => (
+          <TodoItem
+            key={item.id}
+            id={item.id}
+            userId={item.userId}
+            title={item.title}
+            completed={item.completed}
+            onDelete={deleteHandler}
+            onToggleState={toggleStateHandler}
+            onEdit={editHandler}
+          />
+        ))}
+      </ol>
+    </>
   );
 };
