@@ -1,0 +1,25 @@
+.card--green {}
+
+.card {
+    header {
+        font-size: 3rem;
+        margin: 1em 0;
+        text-align: center;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    &>div {
+        text-align: right;
+        font-size: 1rem;
+    }
+
+    span {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    footer {
+        
+    }
+}

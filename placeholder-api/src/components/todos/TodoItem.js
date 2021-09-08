@@ -1,8 +1,11 @@
 import { createRef, useEffect, useState } from "react";
 import { useHttp } from "../../hooks/use-http";
 import { getUser } from "../../lib/api";
+import { Card } from "../UI/Card";
 import { Modal } from "../UI/Modal";
 import { TodoList } from "./TodoList";
+
+import classes from "./TodoItem.module.scss";
 
 export const TodoItem = (props) => {
   const { isLoading, result, error, sendRequest } = useHttp(getUser, true);
@@ -66,8 +69,11 @@ export const TodoItem = (props) => {
   if (error) {
     return <p>Sth is wrong...</p>;
   }
+
+  const additionalClasses = completedState ? classes["card--green"] : "";
+
   return (
-    <div>
+    <Card className={`${classes.card} ${additionalClasses}`}>
       {isDelete && (
         <Modal
           onClose={closeModalHandler}
@@ -90,7 +96,6 @@ export const TodoItem = (props) => {
       <div>
         <p>
           Created by: <span>{result.name}</span>{" "}
-          {completedState ? "Completed" : "Not completed"}
         </p>
       </div>
       <footer>
@@ -108,6 +113,6 @@ export const TodoItem = (props) => {
           </>
         )}
       </footer>
-    </div>
+    </Card>
   );
 };

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { TodoList } from "./components/todos/TodoList";
 import { useHttp } from "./hooks/use-http";
 import { getAllTodos } from "./lib/api";
-
+import "./App.scss";
 function App() {
   const { isLoading, result, error, sendRequest } = useHttp(getAllTodos, true);
 
