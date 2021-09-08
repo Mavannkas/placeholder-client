@@ -1,15 +1,38 @@
 import { useState } from "react";
-import { deleteTodo } from "../../lib/api";
+import { deleteTodo, updateTodo } from "../../lib/api";
 import { TodoItem } from "./TodoItem";
 
 export const TodoList = (props) => {
   const [todoList, setTodoList] = useState(props.todos);
+
   const deleteHandler = async (id) => {
+    try {
+      await deleteTodo(id);
+    } catch (err) {
+      alert(err);
+    }
+
     setTodoList((prevTodos) => {
       return prevTodos.filter((todo) => todo.id !== id);
     });
+  };
 
-    await deleteTodo(id);
+  const toggleStateHandler = async (id, directState) => {
+    try {
+      await updateTodo(id, {
+        completed: directState,
+      });
+    } catch (err) {
+      alert(err);
+    }
+
+    setTodoList((prevTodos) => {
+      const todoIndex = prevTodos.findIndex((todo) => todo.id === id);
+
+      prevTodos[todoIndex].completed = directState;
+
+      return prevTodos;
+    });
   };
 
   return (
@@ -20,8 +43,9 @@ export const TodoList = (props) => {
           id={item.id}
           userId={item.userId}
           title={item.title}
-          completed={item.completed}
+          mpleted={item.completed}
           onDelete={deleteHandler}
+          onToggleState={toggleStateHandler}
         />
       ))}
     </ol>

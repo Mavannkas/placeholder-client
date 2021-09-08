@@ -2,17 +2,18 @@ import { useEffect, useState } from "react";
 import { useHttp } from "../../hooks/use-http";
 import { getUser } from "../../lib/api";
 import { Modal } from "../UI/Modal";
+import { TodoList } from "./TodoList";
 
 export const TodoItem = (props) => {
   const { isLoading, result, error, sendRequest } = useHttp(getUser, true);
   const [isDelete, setIsDelete] = useState(false);
+  const [completedState, setCompletedState] = useState(props.completed);
 
   useEffect(() => {
     sendRequest(props.userId);
   }, [sendRequest, props.userId]);
 
   const deleteHandler = () => {
-    console.log("XD");
     setIsDelete(true);
   };
 
@@ -22,6 +23,12 @@ export const TodoItem = (props) => {
 
   const closeModalHandler = () => {
     setIsDelete(false);
+  };
+
+  const toggleStateHandler = () => {
+    props.onToggleState(props.id, !completedState);
+
+    setCompletedState((prevTodo) => !prevTodo);
   };
 
   if (isLoading) {
@@ -42,7 +49,7 @@ export const TodoItem = (props) => {
         />
       )}
       <header>
-        {props.title} {props.completed ? "Completed" : "Not completed"}
+        {props.title} {completedState ? "Completed" : "Not completed"}
       </header>
       <div>
         <p>
@@ -50,7 +57,7 @@ export const TodoItem = (props) => {
         </p>
       </div>
       <footer>
-        <button>Change state</button>
+        <button onClick={toggleStateHandler}>Change state</button>
         <button>Edit</button>
         <button onClick={deleteHandler}>Delete</button>
       </footer>
