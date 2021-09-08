@@ -12,7 +12,11 @@
         background-color: #028253;
     }
 
-
+    &:disabled {
+        background-color: #5e9480;
+        color: rgb(175, 175, 175);
+        cursor: not-allowed;
+    }
 }
 
 @media (min-width: 700px) {

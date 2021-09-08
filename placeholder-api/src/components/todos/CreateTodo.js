@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { Button } from "../UI/Button";
+import { Card } from "../UI/Card";
 import { Modal } from "../UI/Modal";
-
+import classes from "./CreateTodo.module.scss";
 export const CreateTodo = (props) => {
   const [isShow, setIsShow] = useState(false);
   const [isCloseForm, setIsCloseForm] = useState(false);
@@ -45,6 +47,8 @@ export const CreateTodo = (props) => {
       title: enteredTitle,
       completed: false,
     });
+    setEnteredTitle("");
+    setEnteredUserId("");
   };
 
   const userIdChangeHandler = (event) => {
@@ -55,7 +59,7 @@ export const CreateTodo = (props) => {
   };
 
   return (
-    <div>
+    <Card className={classes.centered}>
       {isCloseForm && (
         <Modal
           onClose={closeModalHandler}
@@ -64,9 +68,13 @@ export const CreateTodo = (props) => {
           title="Attention"
         />
       )}
-      {!isShow && <button onClick={showHandler}>Create todos</button>}
+      {!isShow && (
+        <div className={classes.buttons}>
+          <Button onClick={showHandler}>Create todos</Button>
+        </div>
+      )}
       {isShow && (
-        <form onSubmit={submitHandler}>
+        <form className={classes.form} onSubmit={submitHandler}>
           <div>
             <label htmlFor="id">userId</label>
             <input
@@ -90,14 +98,16 @@ export const CreateTodo = (props) => {
               required
             ></input>
           </div>
-          <button type="submit" disabled={!isFormValid ? "disabled" : ""}>
-            Save
-          </button>
-          <button type="button" onClick={closeHandler}>
-            Close
-          </button>
+          <div className={classes.buttons}>
+            <Button type="submit" disabled={!isFormValid ? "disabled" : ""}>
+              Save
+            </Button>
+            <Button type="button" className="red" onClick={closeHandler}>
+              Close
+            </Button>
+          </div>
         </form>
       )}
-    </div>
+    </Card>
   );
 };

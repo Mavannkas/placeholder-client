@@ -104,7 +104,7 @@ export const TodoItem = (props) => {
           <>
             <Button onClick={toggleStateHandler}>Change state</Button>
             <Button onClick={editShowHandler}>Edit</Button>
-            <Button className={classes["button--red"]} onClick={deleteHandler}>
+            <Button className="red" onClick={deleteHandler}>
               Delete
             </Button>
           </>
@@ -112,10 +112,7 @@ export const TodoItem = (props) => {
         {editable && (
           <>
             <Button onClick={saveEditHandler}>Save</Button>
-            <Button
-              className={classes["button--red"]}
-              onClick={closeEditHandler}
-            >
+            <Button className="red" onClick={closeEditHandler}>
               Close
             </Button>
           </>
